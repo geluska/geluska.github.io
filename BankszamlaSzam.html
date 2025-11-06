@@ -62,18 +62,26 @@
       border: none;
       background: #0ea5a4;
       color: white;
-      padding: 8px 12px;
+      padding: 8px 10px;
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
-      width: 100px; /* fix szélesség, így nem ugrál */
-      text-align: center;
+      width: 44px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
+      font-size: 18px;
     }
     .btn.copied {
       background: #16a34a;
-      color: #fff;
+    }
+    .btn svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
     }
     @media (max-width: 480px) {
       .row {
@@ -98,7 +106,9 @@
       <div class="label">Kedvezményezett:</div>
       <div class="value-box">
         <div class="value" id="nameValue">Dr. Hetényi Géza Sakk Klub</div>
-        <button class="btn" id="copyName">Másolás</button>
+        <button class="btn" id="copyName" title="Másolás">
+          📋
+        </button>
       </div>
     </div>
 
@@ -106,7 +116,9 @@
       <div class="label">Számlaszám:</div>
       <div class="value-box">
         <div class="value" id="accValue">12010721-01749797-00100001</div>
-        <button class="btn" id="copyAcc">Másolás</button>
+        <button class="btn" id="copyAcc" title="Másolás">
+          📋
+        </button>
       </div>
     </div>
   </div>
@@ -114,12 +126,12 @@
   <script>
     function copyTextAndAnimate(button, text) {
       navigator.clipboard.writeText(text).then(() => {
+        const original = button.innerHTML;
         button.classList.add("copied");
-        const original = button.textContent;
-        button.textContent = "Másolva ✅";
+        button.innerHTML = "✅";
         button.disabled = true;
         setTimeout(() => {
-          button.textContent = original;
+          button.innerHTML = original;
           button.classList.remove("copied");
           button.disabled = false;
         }, 1500);
