@@ -62,35 +62,17 @@
       border: none;
       background: #0ea5a4;
       color: white;
-      padding: 8px 10px;
+      padding: 8px 12px;
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s;
-      width: 44px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 110px; /* fix szélesség -> nem ugrál */
+      text-align: center;
       flex-shrink: 0;
-      font-size: 18px;
-      position: relative;
     }
     .btn.copied {
       background: #16a34a;
-    }
-    .btn::after {
-      content: "Másolva!";
-      position: absolute;
-      top: -22px;
-      font-size: 12px;
-      color: #16a34a;
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none;
-    }
-    .btn.copied::after {
-      opacity: 1;
     }
     @media (max-width: 480px) {
       .row {
@@ -115,7 +97,7 @@
       <div class="label">Kedvezményezett:</div>
       <div class="value-box">
         <div class="value" id="nameValue">Dr. Hetényi Géza Sakk Klub</div>
-        <button class="btn" id="copyName" title="Másolás">📋</button>
+        <button class="btn" id="copyName">Másolás</button>
       </div>
     </div>
 
@@ -123,7 +105,7 @@
       <div class="label">Számlaszám:</div>
       <div class="value-box">
         <div class="value" id="accValue">12010721-01749797-00100001</div>
-        <button class="btn" id="copyAcc" title="Másolás">📋</button>
+        <button class="btn" id="copyAcc">Másolás</button>
       </div>
     </div>
   </div>
@@ -131,9 +113,14 @@
   <script>
     function copyTextAndAnimate(button, text) {
       navigator.clipboard.writeText(text).then(() => {
+        const original = button.textContent;
+        button.textContent = "Másolva ✅";
         button.classList.add("copied");
+        button.disabled = true;
         setTimeout(() => {
+          button.textContent = original;
           button.classList.remove("copied");
+          button.disabled = false;
         }, 1500);
       }).catch(() => {
         alert("Nem sikerült másolni. Kérlek, másold kézzel: " + text);
